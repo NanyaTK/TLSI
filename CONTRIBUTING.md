@@ -27,5 +27,4 @@ Once you submit your PR, a Docs team member will review your proposal. We may as
 - If you run into any merge issues, checkout this [git tutorial](https://github.com/skills/resolve-merge-conflicts) to help you resolve merge conflicts and other issues.
 
 ## Naming convention
-We basically follw [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).\
-As an exception, for function names, add a suffix which is name of the file where the function is defined.
+We basically follw [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html) .
