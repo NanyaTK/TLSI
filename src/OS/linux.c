@@ -20,7 +20,7 @@
 #include <stddef.h>
 #include <sys/time.h>
 
-#include "OS/os.h"
+#include "os.h"
 
 OSFunctionTable *LinuxGetFunctionTable() {
     static OSFunctionTable t = {
