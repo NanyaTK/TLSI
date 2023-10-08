@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "OS/linux.h"
+#include "linux.h"
 
 #include <stddef.h>
 #include <sys/time.h>
