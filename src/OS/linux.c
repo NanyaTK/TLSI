@@ -31,7 +31,9 @@ OSFunctionTable *LinuxGetFunctionTable() {
     return &t;
 }
 
-void LinuxInit() {}
+void LinuxInit() {
+    printf("LinuxInit called\n");
+}
 
 void *LinuxMemoryAlloc(size_t size) { return calloc(1, size); }
 void LinuxMemoryFree(void *ptr) { free(ptr); }

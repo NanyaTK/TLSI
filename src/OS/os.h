@@ -25,10 +25,12 @@
 #include <stdio.h>
 
 typedef struct OSFunctionTable {
-    void(*Init)(void);
+    void (*Init)(void);
     void *(*MemoryAlloc)(size_t size);
     void (*MemoryFree)(void *ptr);
 } OSFunctionTable;
+
+extern void OSInit(void);
 
 // include the OS-specific header
 #ifdef WIN32
