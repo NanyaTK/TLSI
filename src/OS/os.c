@@ -20,7 +20,7 @@
 #include <stdio.h>
 
 #include "linux.h"
-#include "type.h"
+#include "../type.h"
 #include "unix.h"
 #include "windows.h"
 

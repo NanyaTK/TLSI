@@ -26,11 +26,11 @@
 
 // include the OS-specific header
 #ifdef WIN32
-#include "OS/windows.h"
+#include "windows.h"
 #elif __linux__  // linux
-#include "OS/linux.h"
+#include "linux.h"
 #else  // WIN32 and linux
-#include "OS/unix.h"
+#include "unix.h"
 #endif  // WIN32
 
 typedef struct OSFunctionTable {

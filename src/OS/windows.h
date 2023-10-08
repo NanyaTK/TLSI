@@ -23,7 +23,7 @@
 #include <malloc.h>
 #include <stdlib.h>
 
-#include "OS/os.h"
+#include "os.h"
 
 //
 extern OSFunctionTable *WIN32GetFunctionTable();

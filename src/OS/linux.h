@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 
-#include "OS/os.h"
+#include "os.h"
 
 //
 extern OSFunctionTable *LinuxGetFunctionTable();
