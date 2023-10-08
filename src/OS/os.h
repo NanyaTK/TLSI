@@ -24,6 +24,12 @@
 
 #include <stdio.h>
 
+typedef struct OSFunctionTable {
+    void(*Init)(void);
+    void *(*MemoryAlloc)(size_t size);
+    void (*MemoryFree)(void *ptr);
+} OSFunctionTable;
+
 // include the OS-specific header
 #ifdef WIN32
 #include "windows.h"
@@ -32,12 +38,5 @@
 #else  // WIN32 and linux
 #include "unix.h"
 #endif  // WIN32
-
-typedef struct OSFunctionTable {
-    void(*Init)(void);
-    void *(*MemoryAlloc)(size_t size);
-    void (*MemoryFree)(void *ptr);
-} OSFunctionTable;
-
 
 #endif  // OS_H
