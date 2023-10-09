@@ -1,14 +1,16 @@
-BASE = src/OS
+BASE = src/OS \
 
 OBJS = $(BASE)/os.o \
+       # src/util.o \
 
 TESTS = ./test/os_osinit_test.exe \
+        # ./test/util_log_test.exe \
 
 CFLAGS := $(CFLAGS) -g -W -Wall 
 
 ifeq ($(shell uname),Linux)
   # Linux
-  OBJS := $(OBJS) $(BASE)/linux.o 
+  # OBJS := $(OBJS) $(BASE)/linux.o 
 endif
 
 .SUFFIXES:
