@@ -1,9 +1,10 @@
 BASE = src/OS \
 
-OBJS = src/util.o \
+OBJS = $(BASE)/os.o \
+       # src/util.o \
 
-
-TESTS = ./test/util_log_test.exe \
+TESTS = ./test/os_osinit_test.exe \
+        # ./test/util_log_test.exe \
 
 CFLAGS := $(CFLAGS) -g -W -Wall 
 
