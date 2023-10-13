@@ -42,4 +42,9 @@ extern void LinuxInit();
  */
 extern void *LinuxMemoryAlloc(size_t size);
 extern void LinuxMemoryFree(void *ptr);
+
+/*
+ * Time
+ */
+extern TIME LinuxGetLocalTime();
 #endif

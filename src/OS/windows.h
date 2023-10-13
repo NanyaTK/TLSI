@@ -22,6 +22,8 @@
 
 #include <malloc.h>
 #include <stdlib.h>
+#include <time.h>
+//#include <windows.h>
 
 #include "os.h"
 
@@ -38,3 +40,8 @@ extern void WIN32Init();
  */
 extern void *WIN32MemoryAlloc(size_t size);
 extern void WIN32MemoryFree(void *ptr);
+
+/*
+ * Local Time
+ */
+extern TIME WIN32GetLocalTime(void);

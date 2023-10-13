@@ -27,13 +27,17 @@ OSFunctionTable *LinuxGetFunctionTable() {
         LinuxInit,
         LinuxMemoryAlloc,
         LinuxMemoryFree,
+        LinuxGetLocalTime,
     };
     return &t;
 }
 
-void LinuxInit() {
-    printf("LinuxInit called\n");
-}
+void LinuxInit() { printf("LinuxInit called\n"); }
 
 void *LinuxMemoryAlloc(size_t size) { return calloc(1, size); }
 void LinuxMemoryFree(void *ptr) { free(ptr); }
+
+TIME LinuxGetLocalTime() {
+    TIME time;
+    return time;
+}
