@@ -22,4 +22,5 @@
 /*
  * Log
  */
-void Logprintf(int logtype) { struct }
+void Logprintf(int logtype) {
+}
