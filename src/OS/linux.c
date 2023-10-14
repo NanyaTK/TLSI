@@ -18,16 +18,16 @@
 #include "linux.h"
 
 #include <stddef.h>
+#include <stdio.h>
 #include <sys/time.h>
+#include <time.h>
 
 #include "os.h"
 
 OSFunctionTable *LinuxGetFunctionTable() {
     static OSFunctionTable t = {
-        LinuxInit,
-        LinuxMemoryAlloc,
-        LinuxMemoryFree,
-        LinuxGetLocalTime,
+        LinuxInit,         LinuxMemoryAlloc, LinuxMemoryFree,
+        LinuxGetLocalTime, LinuxFLockFile,   LinuxFunLockFile,
     };
     return &t;
 }
@@ -39,5 +39,20 @@ void LinuxMemoryFree(void *ptr) { free(ptr); }
 
 TIME LinuxGetLocalTime() {
     TIME time;
+    struct timeval tv;
+    struct tm *tm;
+
+    gettimeofday(&tv, NULL);
+    tm = localtime(&tv.tv_sec);
+    time.year = tm->tm_year + 1900;
+    time.month = tm->tm_mon + 1;
+    time.day = tm->tm_mday;
+    time.hour = tm->tm_hour;
+    time.minute = tm->tm_min;
+    time.second = tm->tm_sec;
+    time.milliseconds = (unsigned int)(tv.tv_usec / 1000);
     return time;
 }
+
+void LinuxFLockFile(FILE *file) { flockfile(file); }
+void LinuxFunLockFile(FILE *file) { funlockfile(file); }

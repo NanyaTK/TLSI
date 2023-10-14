@@ -53,3 +53,5 @@ int GetOsType(int ostype) {
 void *OSMemoryAlloc(size_t size) { return os->MemoryAlloc(size); }
 void OSMemoryFree(void *ptr) { os->MemoryFree(ptr); }
 TIME OSGetLocalTime(void) { return os->GetLocalTime(); }
+void OSFLockFile(FILE *file) { os->FLockFile(file); }
+void OSFunLockFile(FILE *file) { os->FunLockFile(file); }

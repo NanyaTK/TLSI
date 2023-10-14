@@ -47,4 +47,7 @@ extern void LinuxMemoryFree(void *ptr);
  * Time
  */
 extern TIME LinuxGetLocalTime();
+
+extern void LinuxFLockFile(FILE *file);
+extern void LinuxFunLockFile(FILE *file);
 #endif
