@@ -19,4 +19,36 @@
  * util.h
  * header of util.c
  */
+#ifndef UTIL_H
+#define UTIL_H
 
+#include <stdarg.h>
+#include <stdio.h>
+
+#include "OS/os.h"
+
+/*
+ * Log
+ */
+extern void Logprintf(FILE *fp, int logtype, const char *file, int line,
+                      const char *func, const char *fmt, ...);
+/*
+#if defined(__C99__FUNC__)
+#define MACRO_FUNC __func__
+#elif defined(__FUNCTION__)  // __C99__FUNC__
+#define MACRO_FUNC __FUNCTION__
+#else  // __FUNCTION__
+#define MACRO_FUNC "Function name unavailable"
+#endif  // __FUNCTION
+*/
+
+#define MACRO_FUNC __func__
+
+#define debugf(...) \
+    Logprintf(stderr, 'D', __FILE__, __LINE__, MACRO_FUNC, __VA_ARGS__)
+#define errorf(...) \
+    Logprintf(stderr, 'E', __FILE__, __LINE__, MACRO_FUNC, __VA_ARGS__)
+#define infof(...) \
+    Logprintf(stderr, 'I', __FILE__, __LINE__, MACRO_FUNC, __VA_ARGS__)
+
+#endif
