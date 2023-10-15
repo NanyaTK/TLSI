@@ -3,7 +3,7 @@
 #include "../src/util.h"
 
 int main() {
-    fprintf(stderr, "(%s:%d)\n", __FILE__, __LINE__);
-
+    OSInit();
+    debugf("debug test");
     return 0;
 }
