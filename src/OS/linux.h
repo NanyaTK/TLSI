@@ -25,7 +25,9 @@
 
 #include <stddef.h>
 #include <stdlib.h>
+#ifdef __linux__
 #include <sys/time.h>
+#endif
 
 #include "os.h"
 
