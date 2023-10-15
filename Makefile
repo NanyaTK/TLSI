@@ -1,3 +1,5 @@
+CFLAGS = -std=gnu99
+
 OBJS = src/OS/os.o \
        src/util.o \
        # src/util.o \
