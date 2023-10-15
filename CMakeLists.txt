@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION 3.13)
+
+project(main)
+
+set(CMAKE_C_STANDARD 99)
+
+add_library(os STATIC src/OS/os.c)
+add_library(util STATIC src/util.c)
+if(UNIX)
+  add_library(linux STATIC src/OS/linux.c)
+else()
+  add_library(windows STATIC src/OS/windows.c)
+endif()
+
+add_executable(os_osinit_test.exe ./test/os_osinit_test.c)
+add_executable(util_log_test.exe ./test/util_log_test.c)
+add_executable(util_getlocaltime_test.exe ./test/util_getlocaltime_test.c)
+add_executable(os_flockfile_test.exe ./test/os_flockfile_test.c)
+
+if(UNIX)
+  target_link_libraries(os_osinit_test.exe os util linux)
+  target_link_libraries(util_log_test.exe os util linux)
+  target_link_libraries(util_getlocaltime_test.exe os util linux)
+  target_link_libraries(os_flockfile_test.exe os util linux)
+else()
+  target_link_libraries(os_osinit_test.exe os util windows)
+  target_link_libraries(util_log_test.exe os util windows)
+  target_link_libraries(util_getlocaltime_test.exe os util windows)
+  target_link_libraries(os_flockfile_test.exe os util windows)
+endif()
