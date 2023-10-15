@@ -1,16 +1,24 @@
-BASE = src/OS \
+CFLAGS = -std=gnu99
 
-OBJS = $(BASE)/os.o \
+OBJS = src/OS/os.o \
+       src/util.o \
        # src/util.o \
 
+TRASH = src/OS/windows.o \
+
 TESTS = ./test/os_osinit_test.exe \
-        # ./test/util_log_test.exe \
+        ./test/util_log_test.exe \
+        ./test/util_getlocaltime_test.exe \
+        ./test/os_flockfile_test.exe \
 
 CFLAGS := $(CFLAGS) -g -W -Wall 
 
 ifeq ($(shell uname),Linux)
   # Linux
-  # OBJS := $(OBJS) $(BASE)/linux.o 
+  OBJS := $(OBJS) src/OS/linux.o
+else
+  # Windows
+  OBJS := $(OBJS) src/OS/windows.o
 endif
 
 .SUFFIXES:
@@ -27,4 +35,7 @@ $(TESTS): %.exe : %.o $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(APPS) $(APPS:.exe=.o) $(OBJS) $(DRIVERS) $(TESTS) $(TESTS:.exe=.o)
+	rm -rf $(OBJS) $(TRASH) $(TESTS) $(TESTS:.exe=.o)
+
+cleanwin:
+	del $(OBJS) $(TRASH) $(TESTS) $(TESTS:.exe=.o)

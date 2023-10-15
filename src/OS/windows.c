@@ -18,18 +18,42 @@
 #include "windows.h"
 
 #include <malloc.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <windows.h>
 
 OSFunctionTable *WIN32GetFunctionTable() {
     static OSFunctionTable t = {
-        WIN32Init,
-        WIN32MemoryAlloc,
-        WIN32MemoryFree,
+        WIN32Init,         WIN32MemoryAlloc, WIN32MemoryFree,
+        WIN32GetLocalTime, WIN32FLockFile,   WIN32FunLockFile,
     };
     return &t;
 }
 
-void WIN32Init() {}
+void WIN32Init() { printf("WIN32Init\n"); }
 
 void *WIN32MemoryAlloc(size_t size) { return calloc(1, size); }
-void WIN32MemoryFree(void *ptr) { free(*ptr); }
+void WIN32MemoryFree(void *ptr) { free(ptr); }
+
+/*
+ * Return local time
+ */
+TIME WIN32GetLocalTime(void) {
+    SYSTEMTIME st;
+    TIME time;
+    GetLocalTime(&st);
+    time.year = st.wYear;
+    time.month = st.wMonth;
+    time.day = st.wDay;
+    time.hour = st.wHour;
+    time.minute = st.wMinute;
+    time.second = st.wSecond;
+    time.milliseconds = st.wMilliseconds;
+    return time;
+}
+
+/*
+ * file
+ */
+void WIN32FLockFile(FILE *file) { _lock_file(file); }
+void WIN32FunLockFile(FILE *file) { _unlock_file(file); }

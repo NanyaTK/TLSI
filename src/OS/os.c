@@ -19,16 +19,16 @@
 
 #include <stdio.h>
 
-#include "linux.h"
 #include "../type.h"
+#include "linux.h"
 #include "unix.h"
 #include "windows.h"
 
 static OSFunctionTable *os = NULL;
 
 void OSInit(void) {
-#ifdef WIN32
-    os = Win32GetFunctionTable();
+#ifdef _WIN32
+    os = WIN32GetFunctionTable();
 #elif __linux__
     os = LinuxGetFunctionTable();
 #else
@@ -49,3 +49,9 @@ int GetOsType(int ostype) {
 
     return ostype;
 }
+
+void *OSMemoryAlloc(size_t size) { return os->MemoryAlloc(size); }
+void OSMemoryFree(void *ptr) { os->MemoryFree(ptr); }
+TIME OSGetLocalTime(void) { return os->GetLocalTime(); }
+void OSFLockFile(FILE *file) { os->FLockFile(file); }
+void OSFunLockFile(FILE *file) { os->FunLockFile(file); }

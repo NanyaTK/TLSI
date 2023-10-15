@@ -20,8 +20,13 @@
  * Header of windows.c
  */
 
+#ifndef WINDOWS_H
+#define WINDOWS_H
+
 #include <malloc.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "os.h"
 
@@ -38,3 +43,13 @@ extern void WIN32Init();
  */
 extern void *WIN32MemoryAlloc(size_t size);
 extern void WIN32MemoryFree(void *ptr);
+
+/*
+ * Local Time
+ */
+extern TIME WIN32GetLocalTime(void);
+
+extern void WIN32FLockFile(FILE *file);
+extern void WIN32FunLockFile(FILE *file);
+
+#endif  // WINDOWS_H

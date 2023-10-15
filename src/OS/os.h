@@ -24,13 +24,31 @@
 
 #include <stdio.h>
 
+typedef struct TIME {
+    short year;
+    short month;
+    short day;
+    short hour;
+    short minute;
+    short second;
+    short milliseconds;
+} TIME;
+
 typedef struct OSFunctionTable {
     void (*Init)(void);
     void *(*MemoryAlloc)(size_t size);
     void (*MemoryFree)(void *ptr);
+    TIME (*GetLocalTime)(void);
+    void (*FLockFile)(FILE *file);
+    void (*FunLockFile)(FILE *file);
 } OSFunctionTable;
 
 extern void OSInit(void);
+extern void *OSMemoryAlloc(size_t size);
+extern void OSMemoryFree(void *ptr);
+TIME OSGetLocalTime(void);
+void OSFLockFile(FILE *file);
+void OSFunLockFile(FILE *file);
 
 // include the OS-specific header
 #ifdef WIN32
