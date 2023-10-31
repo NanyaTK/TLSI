@@ -14,3 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+#include "network.h"
+
+#include <stdint.h>
+#include <stdio.h>
+
+#include "../OS/os.h"
+#include "../util.h"
+
+IFNET *interfaces;
+IFADDR *addrlists;
+
+IFNET *ifnet_alloc(void) {
+    IFNET *interface;
+    interface = OSMemoryAlloc(sizeof(*interface));
+    if (!interface) {
+        errorf("OSMemoryAlloc() failure");
+        return NULL;
+    }
+    interface->if_index = 3232;
+    return interface;
+}
+
+int ifnet_free(void *interface) {
+    OSMemoryFree(interface);
+    if (interface) {
+        errorf("OSMemoryFree() failure");
+        return -1;
+    }
+    return 0;
+}
