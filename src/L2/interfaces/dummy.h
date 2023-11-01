@@ -14,3 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+/*
+ * dummy.h
+ * Header of dummy.c
+ */
+#ifndef DUMMY_H
+#define DUMMY_H
+
+#include <stdint.h>
+#include <stdio.h>
+
+#include "../network.h"
+
+extern IFNET *DummyInit(void);

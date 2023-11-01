@@ -14,3 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include "dummy.h"
+
+#include "../../util.h"
+#include "../network.h"
+
+static int DummyOutput(IFNET *ifp, const uint8_t *data, const void *dst) {
+    debugf("IFNET=%s", ifp->if_name);
+    return 0;
+}
