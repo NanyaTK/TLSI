@@ -25,8 +25,14 @@
 #include <stdint.h>
 #include <stdio.h>
 
-// #define IFF_BROADCAST
+#include "../OS/os.h"
+
+// 
+#define IFF_DUMMY 0x0000
 #define IFF_LOOPBACK 0x0001
+#define IFF_BROADCAST 0x0002
+#define IFF_MULTICAST 0x0003
+#define IFF_ETHERNET 0x0004
 
 typedef struct if_data {
     uint8_t ifi_type;
@@ -35,12 +41,38 @@ typedef struct if_data {
     uint64_t ifi_mtu;
     uint64_t ifi_metric;
     uint64_t ifi_baudrate;
+    uint64_t ifi_ipackets;
+    uint64_t ifi_ierrors;
+    uint64_t ifi_opackets;
+    uint64_t ifi_oerrors;
+    uint64_t ifi_ibytes;
+    uint64_t ifi_obytes;
+    uint64_t ifi_imcasts;
+    uint64_t ifi_omcasts;
+    TIME ifi_lastchange;
 } IF_DATA;
 
+typedef struct sockaddr {
+} SOCKADDR;
+
 typedef struct ifaddr {
-    struct IFDEV *ifaddr_next;
+    IFADDR *ifaddr_next;
+    IFNET *ifa_ifp;
+    SOCKADDR *ifa_addr;
+    SOCKADDR *ifa_dstaddr;
 
 } IFADDR;
+
+typedef struct iffunc {
+    int (*if_init)(int);
+
+} IFFUNC;
+
+typedef struct sockaddr {
+    uint8_t sa_len;
+    uint8_t sa_family;
+    int8_t sa_data[14];
+} SOCKADDR;
 
 typedef struct ifnet {
     struct ifnet *if_next;
@@ -54,7 +86,8 @@ typedef struct ifnet {
     char *if_bpf;
 
     /* */
-    IF_DATA if_data;
+    IF_DATA *if_data;
+    IFFUNC *if_func;
 
 } IFNET;
 
