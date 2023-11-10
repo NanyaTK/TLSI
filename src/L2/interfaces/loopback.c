@@ -20,7 +20,28 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "../../type.h"
+#include "../../util.h"
 #include "../network.h"
 
-IFNET *LoopbackInit() { IFNET *interface; 
+static int LoopbackOutput(IFNET *interface, const uint8_t *data,
+                          const void *dst) {
+    debugf("LoopbackOutput() called");
+    return 0;
+}
+
+static IFFUNC loopbackfunc = {
+    .output = LoopbackOutput,
+};
+
+IFNET *LoopbackInit() {
+    IFNET *interface;
+    interface = IFNETAlloc();
+    if (!interface) {
+        errorf("IFNETAlloc() failure");
+        return NULL;
+    }
+    interface->if_type = IF_TYPE_LOOPBACK;
+    interface->iffunc = &loopbackfunc;
+    return interface;
 }
