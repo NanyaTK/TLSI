@@ -26,18 +26,17 @@
 IFNET *interfaces;
 IFADDR *addrlists;
 
-IFNET *ifnet_alloc(void) {
+IFNET *IFNETAlloc(void) {
     IFNET *interface;
     interface = OSMemoryAlloc(sizeof(*interface));
     if (!interface) {
         errorf("OSMemoryAlloc() failure");
         return NULL;
     }
-    interface->if_index = 3232;
     return interface;
 }
 
-int ifnet_free(void *interface) {
+int IFNETFree(void *interface) {
     OSMemoryFree(interface);
     if (interface) {
         errorf("OSMemoryFree() failure");
@@ -45,3 +44,5 @@ int ifnet_free(void *interface) {
     }
     return 0;
 }
+
+int IFNETRegister(IFNET *interface) {}

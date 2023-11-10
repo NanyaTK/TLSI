@@ -27,7 +27,7 @@
 
 #include "../OS/os.h"
 
-// 
+//
 #define IFF_DUMMY 0x0000
 #define IFF_LOOPBACK 0x0001
 #define IFF_BROADCAST 0x0002
@@ -53,26 +53,22 @@ typedef struct if_data {
 } IF_DATA;
 
 typedef struct sockaddr {
-} SOCKADDR;
-
-typedef struct ifaddr {
-    IFADDR *ifaddr_next;
-    IFNET *ifa_ifp;
-    SOCKADDR *ifa_addr;
-    SOCKADDR *ifa_dstaddr;
-
-} IFADDR;
-
-typedef struct iffunc {
-    int (*if_init)(int);
-
-} IFFUNC;
-
-typedef struct sockaddr {
     uint8_t sa_len;
     uint8_t sa_family;
     int8_t sa_data[14];
 } SOCKADDR;
+
+typedef struct ifaddr {
+    struct ifaddr *ifaddr_next;
+    struct ifnet *ifa_ifp;
+    SOCKADDR *ifa_addr;
+    SOCKADDR *ifa_dstaddr;
+} IFADDR;
+
+typedef struct iffunc {
+    int (*output)(struct ifnet *interface, const uint8_t *data,
+                  const void *dst);
+} IFFUNC;
 
 typedef struct ifnet {
     struct ifnet *if_next;
@@ -86,8 +82,8 @@ typedef struct ifnet {
     char *if_bpf;
 
     /* */
-    IF_DATA *if_data;
-    IFFUNC *if_func;
+    IF_DATA if_data;
+    IFFUNC *iffunc;
 
 } IFNET;
 
@@ -98,7 +94,8 @@ typedef struct ifnet {
 #define if_metric if_data.ifi_metric
 #define if_baudrate if_data.ifi_baudrate
 
-extern IFNET *ifnet_alloc(void);
-extern int ifnet_free(void *interface);
+extern IFNET *IFNETAlloc(void);
+extern int IFNETFree(void *interface);
+extern int IFNETRegister(IFNET *interface);
 
 #endif
