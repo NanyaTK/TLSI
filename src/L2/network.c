@@ -21,6 +21,7 @@
 #include <stdio.h>
 
 #include "../OS/os.h"
+#include "../type.h"
 #include "../util.h"
 
 IFNET *interfaces;
@@ -45,4 +46,20 @@ int IFNETFree(void *interface) {
     return 0;
 }
 
-int IFNETRegister(IFNET *interface) {}
+int IFNETInterfacesRegister(IFNET *ifp) {
+    debugf("IFNETInterfaceRegister, if=%s", ifp->if_flags);
+    static uint32_t index = 0;
+    ifp->if_index = index++;
+    snprintf(ifp->if_name, sizeof(ifp->if_name), "net%d", ifp->if_index);
+    ifp->if_next = interfaces;
+    interfaces = ifp;
+    return 0;
+}
+
+int IFNETOutput(IFNET *ifp, const uint8_t *data, const void *dst) {
+    if (ifp->if_func->if_output(ifp, data, dst) == -1) {
+        errorf("IF output failure()");
+        return -1;
+    }
+    return 0;
+}

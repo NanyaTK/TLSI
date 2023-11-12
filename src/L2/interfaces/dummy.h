@@ -28,3 +28,5 @@
 #include "../network.h"
 
 extern IFNET *DummyInit(void);
+
+#endif

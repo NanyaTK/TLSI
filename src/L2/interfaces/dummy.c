@@ -16,10 +16,40 @@
  */
 #include "dummy.h"
 
-#include "../../util.h"
-#include "../network.h"
+#include <stdint.h>
+#include <stdio.h>
+
+#include "src/L2/network.h"
+#include "src/OS/os.h"
+#include "src/type.h"
+#include "src/util.h"
 
 static int DummyOutput(IFNET *ifp, const uint8_t *data, const void *dst) {
     debugf("IFNET=%s", ifp->if_name);
     return 0;
+}
+
+static IFFUNC dummy_funcs = {
+    .if_output = DummyOutput,
+};
+
+IFNET *DummyInit(void) {
+    IFNET *ifnet;
+    ifnet = IFNETAlloc();
+    if (!ifnet) {
+        errorf("IFNETAlloc() failure");
+        return NULL;
+    }
+    debugf("IFNETAlloc");
+    ifnet->if_type = IF_TYPE_DUMMY;
+    ifnet->if_addrlen = 0;
+    ifnet->if_hdrlen = 0;
+    ifnet->if_mtu = 1500;
+    ifnet->if_func = &dummy_funcs;
+    if (IFNETInterfacesRegister(ifnet) == -1) {
+        errorf("IFNETInterfacesRegister() failure");
+        return NULL;
+    }
+    debugf("Initialized,interface=%s", ifnet->if_name);
+    return ifnet;
 }
