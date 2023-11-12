@@ -15,5 +15,6 @@
 // ifnet->if_flags
 #define IF_FLAG_UP 0x0001
 #define IF_FLAG_LOOPBACK 0x0010
+#define IF_FLAG_BROADCAST 0x0020
 
 #endif

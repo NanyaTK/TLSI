@@ -10,5 +10,5 @@ int main(void) {
     IFNET *interface;
     interface = IFNETAlloc();
     interface->if_name = "adsf";
-    debugf("asdf%s", interface->if_name);
+    debugf("debug%s", interface->if_name);
 }

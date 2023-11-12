@@ -4,6 +4,7 @@ OBJS = src/OS/os.o \
        src/util.o \
        src/L2/network.o \
        src/L2/interfaces/dummy.o \
+       src/L2/interfaces/loopback.o \
 
 TRASH = src/OS/windows.o \
 

@@ -34,7 +34,6 @@ IFNET *IFNETAlloc(void) {
         errorf("OSMemoryAlloc() failure");
         return NULL;
     }
-    interface->if_index = 3232;
     return interface;
 }
 
