@@ -31,7 +31,7 @@ static int LoopbackOutput(IFNET *interface, const uint8_t *data,
 }
 
 static IFFUNC loopbackfunc = {
-    .output = LoopbackOutput,
+    .if_output = LoopbackOutput,
 };
 
 IFNET *LoopbackInit() {
@@ -42,6 +42,6 @@ IFNET *LoopbackInit() {
         return NULL;
     }
     interface->if_type = IF_TYPE_LOOPBACK;
-    interface->iffunc = &loopbackfunc;
+    interface->if_func = &loopbackfunc;
     return interface;
 }

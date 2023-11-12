@@ -14,6 +14,8 @@ TESTS = test/os_osinit_test.exe \
         test/os_flockfile_test.exe \
         test/network_ifnetalloc_test.exe \
         test/dummy_dummyinit_test.exe \
+        test/loopback_loopbackinit_test.exe \
+        test/loopback_loopbackoutput_test.exe \
 
 CFLAGS := $(CFLAGS) -g -W -Wall -Wno-unused-parameter -iquote .
 
