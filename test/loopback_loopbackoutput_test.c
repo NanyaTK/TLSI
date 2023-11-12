@@ -13,6 +13,6 @@ int main(void) {
         return -1;
     }
     interface = LoopbackInit();
-    interface->iffunc->output(interface, 0, "192.168.0.1");
+    interface->if_func->if_output(interface, 0, "192.168.0.1");
     return 0;
 }
