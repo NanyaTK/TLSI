@@ -14,35 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include "dummy.h"
 
-#include "network.h"
+#include "../../util.h"
+#include "../network.h"
 
-#include <stdint.h>
-#include <stdio.h>
-
-#include "../OS/os.h"
-#include "../util.h"
-
-IFNET *interfaces;
-IFADDR *addrlists;
-
-IFNET *IFNETAlloc(void) {
-    IFNET *interface;
-    interface = OSMemoryAlloc(sizeof(*interface));
-    if (!interface) {
-        errorf("OSMemoryAlloc() failure");
-        return NULL;
-    }
-    return interface;
-}
-
-int IFNETFree(void *interface) {
-    OSMemoryFree(interface);
-    if (interface) {
-        errorf("OSMemoryFree() failure");
-        return -1;
-    }
+static int DummyOutput(IFNET *ifp, const uint8_t *data, const void *dst) {
+    debugf("IFNET=%s", ifp->if_name);
     return 0;
 }
-
-int IFNETRegister(IFNET *interface) {}

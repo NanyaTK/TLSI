@@ -2,7 +2,8 @@ CFLAGS = -std=gnu99
 
 OBJS = src/OS/os.o \
        src/util.o \
-       # src/util.o \
+       src/L2/network.o \
+       src/L2/interfaces/loopback.o \
 
 TRASH = src/OS/windows.o \
 
@@ -10,6 +11,7 @@ TESTS = ./test/os_osinit_test.exe \
         ./test/util_log_test.exe \
         ./test/util_getlocaltime_test.exe \
         ./test/os_flockfile_test.exe \
+        ./test/network_ifnetalloc_test.exe \
 
 CFLAGS := $(CFLAGS) -g -W -Wall 
 

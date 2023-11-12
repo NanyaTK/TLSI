@@ -5,4 +5,12 @@
 #define OS_TYPE_WIN32 2
 #define OS_TYPE_UNIX 3
 
+#define IF_TYPE_DUMMY 0x0000
+#define IF_TYPE_LOOPBACK 0x0001
+#define IF_TYPE_ETHERNET 0x0002
+
+#define IF_FLAG_UP 0x0001
+#define IF_FLAG_LOOPBACK 0x0010
+#define IF_FLAG_BROADCAST 0x0020
+
 #endif

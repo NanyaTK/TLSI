@@ -15,34 +15,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "network.h"
+/*
+ * loopback.h
+ * Header of loopback.c
+ */
 
-#include <stdint.h>
-#include <stdio.h>
+#ifndef LOOPBACK_H
+#define LOOPBACK_H
 
-#include "../OS/os.h"
-#include "../util.h"
+#include "../network.h"
 
-IFNET *interfaces;
-IFADDR *addrlists;
+extern IFNET *LoopbackInit(void);
 
-IFNET *IFNETAlloc(void) {
-    IFNET *interface;
-    interface = OSMemoryAlloc(sizeof(*interface));
-    if (!interface) {
-        errorf("OSMemoryAlloc() failure");
-        return NULL;
-    }
-    return interface;
-}
 
-int IFNETFree(void *interface) {
-    OSMemoryFree(interface);
-    if (interface) {
-        errorf("OSMemoryFree() failure");
-        return -1;
-    }
-    return 0;
-}
-
-int IFNETRegister(IFNET *interface) {}
+#endif
