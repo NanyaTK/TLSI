@@ -32,7 +32,12 @@ OSFunctionTable *LinuxGetFunctionTable() {
     return &t;
 }
 
-void LinuxInit() { printf("LinuxInit called\n"); }
+void LinuxInit() {
+    fprintf(stderr, "  =====================================\n");
+    fprintf(stderr, "  |  OSInit -> LinuxInit was called   |\n");
+    fprintf(stderr, "  |  OS type was registered as Linux  |\n");
+    fprintf(stderr, "  =====================================\n");
+}
 
 void *LinuxMemoryAlloc(size_t size) { return calloc(1, size); }
 void LinuxMemoryFree(void *ptr) { free(ptr); }

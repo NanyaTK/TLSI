@@ -35,7 +35,7 @@ void Logprintf(FILE *fp, int logtype, const char *file, int line,
     fprintf(fp, "%d:%d:%d.%03d [%c] %s: ", time.hour, time.minute, time.second,
             time.milliseconds, logtype, func);
     va_start(ap, fmt);
-    fprintf(fp, fmt, ap);
+    vfprintf(fp, fmt, ap);
     va_end(ap);
     fprintf(fp, " (%s:%d)\n", file, line);
     OSFunLockFile(fp);
