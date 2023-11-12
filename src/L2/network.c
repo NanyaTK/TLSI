@@ -21,12 +21,13 @@
 #include <stdio.h>
 
 #include "../OS/os.h"
+#include "../type.h"
 #include "../util.h"
 
 IFNET *interfaces;
 IFADDR *addrlists;
 
-IFNET *ifnet_alloc(void) {
+IFNET *IFNETAlloc(void) {
     IFNET *interface;
     interface = OSMemoryAlloc(sizeof(*interface));
     if (!interface) {
@@ -37,10 +38,28 @@ IFNET *ifnet_alloc(void) {
     return interface;
 }
 
-int ifnet_free(void *interface) {
+int IFNETFree(void *interface) {
     OSMemoryFree(interface);
     if (interface) {
         errorf("OSMemoryFree() failure");
+        return -1;
+    }
+    return 0;
+}
+
+int IFNETInterfacesRegister(IFNET *ifp) {
+    debugf("IFNETInterfaceRegister, if=%s", ifp->if_flags);
+    static uint32_t index = 0;
+    ifp->if_index = index++;
+    snprintf(ifp->if_name, sizeof(ifp->if_name), "net%d", ifp->if_index);
+    ifp->if_next = interfaces;
+    interfaces = ifp;
+    return 0;
+}
+
+int IFNETOutput(IFNET *ifp, const uint8_t *data, const void *dst) {
+    if (ifp->if_func->if_output(ifp, data, dst) == -1) {
+        errorf("IF output failure()");
         return -1;
     }
     return 0;

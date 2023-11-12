@@ -27,13 +27,6 @@
 
 #include "../OS/os.h"
 
-// 
-#define IFF_DUMMY 0x0000
-#define IFF_LOOPBACK 0x0001
-#define IFF_BROADCAST 0x0002
-#define IFF_MULTICAST 0x0003
-#define IFF_ETHERNET 0x0004
-
 typedef struct if_data {
     uint8_t ifi_type;
     uint8_t ifi_addrlen;
@@ -53,31 +46,22 @@ typedef struct if_data {
 } IF_DATA;
 
 typedef struct sockaddr {
-} SOCKADDR;
-
-typedef struct ifaddr {
-    IFADDR *ifaddr_next;
-    IFNET *ifa_ifp;
-    SOCKADDR *ifa_addr;
-    SOCKADDR *ifa_dstaddr;
-
-} IFADDR;
-
-typedef struct iffunc {
-    int (*if_init)(int);
-
-} IFFUNC;
-
-typedef struct sockaddr {
     uint8_t sa_len;
     uint8_t sa_family;
     int8_t sa_data[14];
 } SOCKADDR;
 
+typedef struct ifaddr {
+    struct ifaddr *ifaddr_next;
+    struct ifnet *ifa_ifp;
+    SOCKADDR *ifa_addr;
+    SOCKADDR *ifa_dstaddr;
+} IFADDR;
+
 typedef struct ifnet {
     struct ifnet *if_next;
     IFADDR *if_addrlist;
-    char *if_name;
+    char if_name[16];
     int16_t if_unit;
     uint16_t if_index;
     int16_t if_flags; /* IFF */
@@ -86,10 +70,17 @@ typedef struct ifnet {
     char *if_bpf;
 
     /* */
-    IF_DATA *if_data;
-    IFFUNC *if_func;
+    IF_DATA if_data;
+    struct iffunc *if_func;
 
 } IFNET;
+
+/* functions */
+typedef struct iffunc {
+    // int (*if_init)(int);
+    int (*if_input)(int);
+    int (*if_output)(IFNET *ifp, const uint8_t *data, const void *dst);
+} IFFUNC;
 
 #define if_type if_data.ifi_type
 #define if_addrlen if_data.ifi_addrlen
@@ -97,8 +88,18 @@ typedef struct ifnet {
 #define if_mtu if_data.ifi_mtu
 #define if_metric if_data.ifi_metric
 #define if_baudrate if_data.ifi_baudrate
+#define if_ipackets if_data.ifi_ipackets
+#define if_ierrors if_data.ifi_ierrors
+#define if_opackets if_data.ifi_opackets
+#define if_ibytes if_data.ifi_ibytes
+#define if_obytes if_data.ifi_obytes
+#define if_imcasts if_data.ifi_imcasts
+#define if_omcasts if_data.ifi_omcasts
+#define if_lastchange if_data.ifi_lastchange
 
-extern IFNET *ifnet_alloc(void);
-extern int ifnet_free(void *interface);
+extern IFNET *IFNETAlloc(void);
+extern int IFNETFree(void *interface);
+extern int IFNETInterfacesRegister(IFNET *ifp);
+extern int IFNETOutput(IFNET *ifp, const uint8_t *data, const void *dst);
 
 #endif
