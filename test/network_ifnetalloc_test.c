@@ -8,7 +8,7 @@
 int main(void) {
     OSInit();
     IFNET *interface;
-    interface = ifnet_alloc();
+    interface = IFNETAlloc();
     interface->if_name = "adsf";
     debugf("asdf%s", interface->if_name);
 }
