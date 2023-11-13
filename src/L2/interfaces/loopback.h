@@ -23,7 +23,7 @@
 #ifndef LOOPBACK_H
 #define LOOPBACK_H
 
-#include "../network.h"
+#include "src/L2/network.h"
 
 extern IFNET *LoopbackInit(void);
 
