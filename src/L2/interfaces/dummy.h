@@ -25,7 +25,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "../network.h"
+#include "src/L2/network.h"
 
 extern IFNET *DummyInit(void);
 

@@ -20,9 +20,9 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "../../type.h"
-#include "../../util.h"
-#include "../network.h"
+#include "src/type.h"
+#include "src/util.h"
+#include "src/L2/network.h"
 
 static int LoopbackOutput(IFNET *interface, const uint8_t *data,
                           const void *dst) {

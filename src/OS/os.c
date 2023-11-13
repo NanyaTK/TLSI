@@ -19,7 +19,7 @@
 
 #include <stdio.h>
 
-#include "../type.h"
+#include "src/type.h"
 #include "linux.h"
 #include "unix.h"
 #include "windows.h"

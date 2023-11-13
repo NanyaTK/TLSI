@@ -20,9 +20,9 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "../OS/os.h"
-#include "../type.h"
-#include "../util.h"
+#include "src/OS/os.h"
+#include "src/type.h"
+#include "src/util.h"
 
 IFNET *interfaces;
 IFADDR *addrlists;

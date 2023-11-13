@@ -25,7 +25,7 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "../OS/os.h"
+#include "src/OS/os.h"
 
 typedef struct if_data {
     uint8_t ifi_type;
