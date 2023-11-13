@@ -5,39 +5,39 @@ project(main)
 set(CMAKE_C_STANDARD 99)
 
 
-add_library(os SHARED src/OS/os.c)
+add_library(os STATIC src/OS/os.c)
 target_include_directories(os PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<INSTALL_INTERFACE:include/mylib>  # <prefix>/include/mylib
 )
-add_library(util SHARED src/util.c)
+add_library(util STATIC src/util.c)
 target_include_directories(util PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<INSTALL_INTERFACE:include/mylib>  # <prefix>/include/mylib
 )
-add_library(network SHARED src/L2/network.c)
+add_library(network STATIC src/L2/network.c)
 target_include_directories(network PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<INSTALL_INTERFACE:include/mylib>  # <prefix>/include/mylib
 )
-add_library(dummy SHARED src/L2/interfaces/dummy.c)
+add_library(dummy STATIC src/L2/interfaces/dummy.c)
 target_include_directories(dummy PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<INSTALL_INTERFACE:include/mylib>  # <prefix>/include/mylib
 )
-add_library(loopback SHARED src/L2/interfaces/loopback.c)
+add_library(loopback STATIC src/L2/interfaces/loopback.c)
 target_include_directories(loopback PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<INSTALL_INTERFACE:include/mylib>  # <prefix>/include/mylib
 )
 if(UNIX)
-  add_library(linux SHARED src/OS/linux.c)
+  add_library(linux STATIC src/OS/linux.c)
   target_include_directories(linux PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<INSTALL_INTERFACE:include/mylib>  # <prefix>/include/mylib
 )
 else()
-  add_library(windows SHARED src/OS/windows.c)
+  add_library(windows STATIC src/OS/windows.c)
   target_include_directories(windows PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<INSTALL_INTERFACE:include/mylib>  # <prefix>/include/mylib
