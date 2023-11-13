@@ -36,7 +36,7 @@ extern OSFunctionTable *WIN32GetFunctionTable();
 /*
  * Initialize
  */
-extern void WIN32Init();
+extern void WIN32Init(void);
 
 /*
  * Memory
