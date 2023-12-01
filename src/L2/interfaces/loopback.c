@@ -20,9 +20,9 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "src/L2/network.h"
 #include "src/type.h"
 #include "src/util.h"
-#include "src/L2/network.h"
 
 static int LoopbackOutput(IFNET *interface, const uint8_t *data,
                           const void *dst) {
@@ -30,7 +30,13 @@ static int LoopbackOutput(IFNET *interface, const uint8_t *data,
     return 0;
 }
 
+static int LoopbackInput(IFNET *interface) {
+    debugf("LoopbackInput() called");
+    return 0;
+}
+
 static IFFUNC loopbackfunc = {
+    .if_input = LoopbackInput,
     .if_output = LoopbackOutput,
 };
 
