@@ -47,7 +47,15 @@ IFNET *LoopbackInit() {
         errorf("IFNETAlloc() failure");
         return NULL;
     }
+    interface->if_flags = IF_FLAG_LOOPBACK;
+    // infof("if_flags:%d", interface->if_flags);
+    interface->if_timer = 15;
     interface->if_type = IF_TYPE_LOOPBACK;
     interface->if_func = &loopbackfunc;
+    if (IFNETInterfacesRegister(interface) == -1) {
+        errorf("IFNETInterfacesRegister() failed");
+        return NULL;
+    }
+    debugf("Initialized,interface=%s", interface->if_name);
     return interface;
 }

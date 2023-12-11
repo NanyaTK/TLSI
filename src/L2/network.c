@@ -46,8 +46,13 @@ int IFNETFree(void *interface) {
     return 0;
 }
 
+/*
+ * Initialize following values
+ * if_index, if_name, if_next
+ * And add interfaces.
+ */
 int IFNETInterfacesRegister(IFNET *ifp) {
-    debugf("IFNETInterfaceRegister, if=%s", ifp->if_flags);
+    debugf("IFNETInterfaceRegister, if=0x%04x", ifp->if_flags);
     static uint32_t index = 0;
     ifp->if_index = index++;
     snprintf(ifp->if_name, sizeof(ifp->if_name), "net%d", ifp->if_index);
