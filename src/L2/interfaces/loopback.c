@@ -20,9 +20,9 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#include "src/L2/network.h"
 #include "src/type.h"
 #include "src/util.h"
-#include "src/L2/network.h"
 
 static int LoopbackOutput(IFNET *interface, const uint8_t *data,
                           const void *dst) {
@@ -30,7 +30,13 @@ static int LoopbackOutput(IFNET *interface, const uint8_t *data,
     return 0;
 }
 
+static int LoopbackInput(IFNET *interface) {
+    debugf("LoopbackInput() called");
+    return 0;
+}
+
 static IFFUNC loopbackfunc = {
+    .if_input = LoopbackInput,
     .if_output = LoopbackOutput,
 };
 
@@ -41,7 +47,15 @@ IFNET *LoopbackInit() {
         errorf("IFNETAlloc() failure");
         return NULL;
     }
+    interface->if_flags = IF_FLAG_LOOPBACK;
+    // infof("if_flags:%d", interface->if_flags);
+    interface->if_timer = 15;
     interface->if_type = IF_TYPE_LOOPBACK;
     interface->if_func = &loopbackfunc;
+    if (IFNETInterfacesRegister(interface) == -1) {
+        errorf("IFNETInterfacesRegister() failed");
+        return NULL;
+    }
+    debugf("Initialized,interface=%s", interface->if_name);
     return interface;
 }
