@@ -8,14 +8,14 @@ OBJS = src/OS/os.o \
 
 TRASH = src/OS/windows.o \
 
-TESTS = test/os_osinit_test.exe \
-        test/util_log_test.exe \
-        test/util_getlocaltime_test.exe \
-        test/os_flockfile_test.exe \
-        test/network_ifnetalloc_test.exe \
-        test/dummy_dummyinit_test.exe \
-        test/loopback_loopbackinit_test.exe \
-        test/loopback_loopbackoutput_test.exe \
+TESTS = test/0200_os_osinit_test.exe \
+        test/0101_util_log_test.exe \
+        test/0100_util_getlocaltime_test.exe \
+        test/0201_os_flockfile_test.exe \
+        test/0500_network_ifnetalloc_test.exe \
+        test/0300_dummy_dummyinit_test.exe \
+        test/0400_loopback_loopbackinit_test.exe \
+        test/0402_loopback_loopbackoutput_test.exe \
 
 CFLAGS := $(CFLAGS) -g -W -Wall -Wno-unused-parameter -iquote .
 
