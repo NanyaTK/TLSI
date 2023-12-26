@@ -21,8 +21,6 @@
 #include "src/type.h"
 #include "src/util.h"
 
-MBUF mbuf;
-MBUF2 mbuf2;
 typedef struct queues {
     union {
         MBUF *head;
@@ -57,7 +55,7 @@ void *QueueEnque(QUEUES *queues, void *data, uint32_t len, uint16_t type,
     if (!queues) {
         return NULL;
     }
-    switch (mbuftype) {
+    /*switch (mbuftype) {
         case 1:
             MBUF *entry;
             entry = OSMemoryAlloc(sizeof(entry));
@@ -69,7 +67,7 @@ void *QueueEnque(QUEUES *queues, void *data, uint32_t len, uint16_t type,
             break;
         case 2:
             MBUF2 *entry2;
-            entry2 = OSMemoryAlloc(sizeof(entry));
+            entry2 = OSMemoryAlloc(sizeof(entry2));
             if (!entry2) {
                 errorf("OSMemoryAlloc() failure");
             }
@@ -84,7 +82,14 @@ void *QueueEnque(QUEUES *queues, void *data, uint32_t len, uint16_t type,
             }
             return entry_default;
             break;
+    }*/
+    MBUF *entry;
+    entry = OSMemoryAlloc(sizeof(entry));
+    if (!entry) {
+        errorf("OSMemoryAlloc() failure");
     }
+    MBUFEnque(entry, data, len, type, flags);
+    return entry;
 
     return 0;
 }
