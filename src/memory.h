@@ -27,7 +27,7 @@
 #include "src/type.h"
 #include "src/util.h"
 
-typedef struct queues QUEUES;
+//typedef struct queues QUEUES;
 
 typedef struct m_hdr {
     struct mbuf *mh_next; // chain
