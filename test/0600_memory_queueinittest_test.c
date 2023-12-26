@@ -1,6 +1,3 @@
-#include <stdint.h>
-#include <stdio.h>
-
 #include "src/OS/os.h"
 #include "src/memory.h"
 #include "src/util.h"
