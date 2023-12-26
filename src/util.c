@@ -40,3 +40,7 @@ void Logprintf(FILE *fp, int logtype, const char *file, int line,
     fprintf(fp, " (%s:%d)\n", file, line);
     OSFunLockFile(fp);
 }
+
+/*
+ * queue
+ */

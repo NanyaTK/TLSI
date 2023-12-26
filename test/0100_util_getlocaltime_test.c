@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "../src/OS/os.h"
+#include "src/OS/os.h"
 int main(void) {
     TIME time;
     OSInit();

@@ -30,7 +30,12 @@ OSFunctionTable *WIN32GetFunctionTable() {
     return &t;
 }
 
-void WIN32Init(void) { printf("WIN32Init\n"); }
+void WIN32Init(void) {
+    fprintf(stderr, "  =======================================\n");
+    fprintf(stderr, "  |  OSInit -> WindowsInit was called   |\n");
+    fprintf(stderr, "  |  OS type was registered as Windows  |\n");
+    fprintf(stderr, "  =======================================\n");
+}
 
 void *WIN32MemoryAlloc(size_t size) { return calloc(1, size); }
 void WIN32MemoryFree(void *ptr) { free(ptr); }

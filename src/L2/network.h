@@ -78,7 +78,7 @@ typedef struct ifnet {
 /* functions */
 typedef struct iffunc {
     // int (*if_init)(int);
-    int (*if_input)(int);
+    int (*if_input)(IFNET *ifp);
     int (*if_output)(IFNET *ifp, const uint8_t *data, const void *dst);
 } IFFUNC;
 
