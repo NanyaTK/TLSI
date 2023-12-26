@@ -1,7 +1,7 @@
-#include "../src/L2/interfaces/loopback.h"
-#include "../src/L2/network.h"
-#include "../src/OS/os.h"
-#include "../src/util.h"
+#include "src/L2/interfaces/loopback.h"
+#include "src/L2/network.h"
+#include "src/OS/os.h"
+#include "src/util.h"
 
 int main(void) {
     IFNET *interface;

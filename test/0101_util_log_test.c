@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "../src/util.h"
+#include "src/util.h"
 
 int main() {
     OSInit();
