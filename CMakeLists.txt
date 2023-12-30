@@ -97,5 +97,5 @@ else()
   target_link_libraries(0402_loopback_loopbackoutput_test.exe ${library} windows)
   target_link_libraries(0600_memory_queueinittest_test.exe ${library} windows)
   target_link_libraries(0601_memory_QueueEnque_test.exe ${library} windows)
-
+  target_link_libraries(9900_union.exe ${library} windows)
 endif()
