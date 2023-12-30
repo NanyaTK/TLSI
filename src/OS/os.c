@@ -19,13 +19,22 @@
 
 #include <stdio.h>
 
-#include "src/type.h"
 #include "linux.h"
+#include "src/type.h"
 #include "unix.h"
 #include "windows.h"
 
 static OSFunctionTable *os = NULL;
 
+/*
+ * ===================================
+ *               OSInit
+ *  Initialize OS specific functions.
+ *     You must call this function
+ *   before you use OSMemoryAlloc() ,
+ *     OSGetLocalTime() and so on.
+ * ===================================
+ */
 void OSInit(void) {
 #ifdef _WIN32
     os = WIN32GetFunctionTable();
@@ -50,7 +59,25 @@ int GetOsType(int ostype) {
     return ostype;
 }
 
+/*
+ * ===================================
+ *           OSMemoryAlloc
+ *  This function allocates storage
+ *  Linux, Windows :
+ *  Allocate size elements of
+ *  SIZE bytes each, all initialized to 0.
+ * ===================================
+ */
 void *OSMemoryAlloc(size_t size) { return os->MemoryAlloc(size); }
+
+/*
+ * ===================================
+ *           OSMemoryFree
+ *  This function deallocates storage
+ *  that was previously allocated by
+ *  OSMemoryAlloc.
+ * ===================================
+ */
 void OSMemoryFree(void *ptr) { os->MemoryFree(ptr); }
 TIME OSGetLocalTime(void) { return os->GetLocalTime(); }
 void OSFLockFile(FILE *file) { os->FLockFile(file); }

@@ -63,12 +63,16 @@ add_executable(0402_loopback_loopbackoutput_test.exe ./test/0402_loopback_loopba
 add_executable(0600_memory_queueinittest_test.exe ./test/0600_memory_queueinittest_test.c)
 add_executable(0601_memory_QueueEnque_test.exe ./test/0601_memory_QueueEnque_test.c)
 
+add_executable(9900_union.exe ./test/9900_union.c)
+
 target_link_libraries(dummy util)
 target_link_libraries(loopback util)
 target_link_libraries(network util)
 target_link_libraries(memory util)
+target_link_libraries(util os)
 
 if(UNIX)
+  target_link_libraries(os linux)
   target_link_libraries(0200_os_osinit_test.exe ${library} network linux)
   target_link_libraries(0101_util_log_test.exe ${library} network linux)
   target_link_libraries(0100_util_getlocaltime_test.exe ${library} network linux)
@@ -79,8 +83,10 @@ if(UNIX)
   target_link_libraries(0402_loopback_loopbackoutput_test.exe ${library} linux)
   target_link_libraries(0600_memory_queueinittest_test.exe ${library} linux)
   target_link_libraries(0601_memory_QueueEnque_test.exe ${library} linux)
+  target_link_libraries(9900_union.exe ${library} linux)
   
 else()
+  target_link_libraries(os windows)
   target_link_libraries(0200_os_osinit_test.exe ${library} windows)
   target_link_libraries(0101_util_log_test.exe ${library} windows)
   target_link_libraries(0100_util_getlocaltime_test.exe ${library} windows)
