@@ -21,68 +21,60 @@
 #include "src/type.h"
 #include "src/util.h"
 
-typedef struct queues {
-    union {
-        MBUF *head;
-        MBUF2 *head2;
-    };
-    union {
-        MBUF *tail;
-        MBUF2 *tail2;
-    };
-} QUEUES;
+int QueueInit(QUEUES *queues) { return QueueInitTest(queues); }
 
 int QueueInitTest(QUEUES *queues) {
     queues->head = NULL;
     queues->tail = NULL;
+    queues->num = 0;
     return 0;
 }
 
-void *MBUFEnque(MBUF *entry, void *data, uint32_t len, uint16_t type,
-                uint16_t flags) {
-    entry->m_nextpkt = NULL;
-    entry->m_data = data;
-    entry->m_len = len;
-    entry->m_type = type;
-    entry->m_flags = flags;
-    return 0;
+void *MBUFEnqueue(QUEUES *queues, MBUF *data) {
+    if (!queues) {
+        errorf("queues does not initialized.");
+    }
+    MBUF *entry;
+    entry = OSMemoryAlloc(sizeof(*entry));
+    entry->m_next = NULL;
+    entry->m_len = data->m_len;
+    entry->m_data = data->m_data;
+    entry->m_type = data->m_type;
+    entry->m_flags = data->m_flags;
+    entry->m_nextpkt = data->m_nextpkt;
+
+    if (queues->tail) {
+        queues->tail->m_next = entry;
+    }
+    queues->tail = entry;
+    if (!queues->head) {
+        queues->head = entry;
+    }
+    queues->num++;
+    return data;
 }
 
-void *MBUF2Enque(MBUF2 *entry) { return 0; }
+void *MBUFEXEnqueue(MBUFEX *entry, void *data) { return data; }
 
-void *QueueEnque(QUEUES *queues, void *data, uint32_t len, uint16_t type,
-                 uint16_t flags, uint8_t mbuftype) {
+void *QueueEnqueue(QUEUES *queues, void *data, uint8_t mbuftype) {
     if (!queues) {
         return NULL;
     }
-    /*switch (mbuftype) {
+    switch (mbuftype) {
         case 1:
-            MBUF *entry;
-            entry = OSMemoryAlloc(sizeof(entry));
-            if (!entry) {
-                errorf("OSMemoryAlloc() failure");
-            }
-            MBUFEnque(entry, data, len, type, flags);
-            return entry;
+            return MBUFEnqueue(queues, data);
             break;
         case 2:
-            MBUF2 *entry2;
-            entry2 = OSMemoryAlloc(sizeof(entry2));
-            if (!entry2) {
-                errorf("OSMemoryAlloc() failure");
-            }
-            MBUF2Enque(entry2);
-            return entry2;
+            return MBUFEXEnqueue(queues, data);
             break;
         default:
-            MBUF *entry_default;
-            entry_default = OSMemoryAlloc(sizeof(entry_default));
-            if (!entry_default) {
-                errorf("OSMemoryAlloc() failure");
-            }
-            return entry_default;
+            infof(
+                "Return MBUFEnque because mbuftype does not match prepared "
+                "values.");
+            return MBUFEnqueue(queues, data);
             break;
-    }*/
+    }
+    /*
     MBUF *entry;
     entry = OSMemoryAlloc(sizeof(entry));
     if (!entry) {
@@ -90,6 +82,6 @@ void *QueueEnque(QUEUES *queues, void *data, uint32_t len, uint16_t type,
     }
     MBUFEnque(entry, data, len, type, flags);
     return entry;
-
+    */
     return 0;
 }
