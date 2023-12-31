@@ -17,7 +17,7 @@
 
 /*
  * type.h
- * define 
+ * define
  */
 
 #ifndef TYPE_H
@@ -40,7 +40,7 @@
 #define IF_FLAG_BROADCAST 0x0020
 
 #define MSIZE 256
-#define MLEN (MSIZE-sizeof(M_HDR))
+#define MLEN (MSIZE - sizeof(M_HDR))
 
 #define M_FLAG_BCAST 0x0001
 #define M_FLAG_EOR 0x0002
@@ -49,5 +49,10 @@
 #define M_FLAG_PKTHDR 0x0005
 #define M_COPYFLAG \
     M_FLAG_BCAST | M_FLAG_EOR | M_FLAG_EXT | M_FLAG_MCAST | M_FLAG_PKTHDR
+
+#define QUEUES_HEADFLAG_MBUF 1
+#define QUEUES_HEADFLAG_MBUFEX 2
+#define QUEUES_TAILFLAG_MBUF 1
+#define QUEUES_TAILFLAG_MBUFEX 2
 
 #endif
