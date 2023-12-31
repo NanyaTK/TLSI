@@ -31,9 +31,9 @@ int main(void) {
     mbuf->m_data = "asdffsa";
     void *data = "mexsadfdjfask";
     debugf("%s", mbufex->mex_data);
-    QueueEnqueue(queues, mbuf, 1);
+    //QueueEnqueue(queues, mbuf, 1);
     QueueEnqueue(queues, mbuf, 1);
     QueueEnqueue(queues, data, 2);
     QueueEnqueue(queues, mbuf, 1);
-    debugf("%s,%d", queues->tail->m_data, queues->num);
+    debugf("%s,%d", queues->head->m_data, queues->num);
 }
