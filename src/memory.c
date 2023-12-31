@@ -33,9 +33,14 @@ int QueueInitTest(QUEUES *queues) {
 void *MBUFEnqueue(QUEUES *queues, MBUF *data) {
     if (!queues) {
         errorf("queues does not initialized.");
+        return NULL;
     }
     MBUF *entry;
     entry = OSMemoryAlloc(sizeof(*entry));
+    if (!queues) {
+        errorf("OSMemoryAlloc() failure. (MBUF *entry)");
+        return NULL;
+    }
     entry->m_next = NULL;
     entry->m_len = data->m_len;
     entry->m_data = data->m_data;
@@ -51,10 +56,34 @@ void *MBUFEnqueue(QUEUES *queues, MBUF *data) {
         queues->head = entry;
     }
     queues->num++;
+    debugf("%s", entry->m_data);
     return data;
 }
 
-void *MBUFEXEnqueue(MBUFEX *entry, void *data) { return data; }
+void *MBUFEXEnqueue(QUEUES *queues, void *data) {
+    if (!queues) {
+        errorf("queues does not initialized.");
+        return NULL;
+    }
+    MBUFEX *entry;
+    entry = OSMemoryAlloc(sizeof(*entry));
+    if (!entry) {
+        errorf("OSMemoryAlloc() failure. (MBUFEX *entry)");
+        return NULL;
+    }
+    entry->mex_next = NULL;
+    entry->mex_data = data;
+    if (queues->tailex) {
+        queues->tailex->mex_next = entry;
+    }
+    queues->tailex = entry;
+    if (!queues->headex) {
+        queues->headex = entry;
+    }
+    queues->num++;
+    debugf("%s", entry->mex_data);
+    return data;
+}
 
 void *QueueEnqueue(QUEUES *queues, void *data, uint8_t mbuftype) {
     if (!queues) {
