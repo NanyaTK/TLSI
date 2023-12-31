@@ -27,15 +27,17 @@
 #include "src/type.h"
 #include "src/util.h"
 
-typedef struct queues QUEUES;
-
+/*
+ * header of memory buffer
+ */
 typedef struct m_hdr {
-    struct mbuf *mh_next; // chain
-    struct mbuf *mh_nextpkt; // packet
-    uint32_t mh_len; // data length
-    void *mh_data; // data pointer
+    void *mh_next;     // chain
+    struct mbuf *mh_nextpkt;  // packet
+    uint32_t mh_len;          // data length
+    void *mh_data;            // data pointer
     uint16_t mh_type;
     uint16_t mh_flags;
+    uint8_t mh_nextflag;
 } M_HDR;
 
 typedef struct pkthdr {
@@ -43,6 +45,9 @@ typedef struct pkthdr {
     IFNET *recvif;
 } PKTHDR;
 
+/*
+ * extension buffer
+ */
 typedef struct m_ext {
     void *ext_buf;
     void (*ext_free)();
@@ -68,6 +73,7 @@ typedef struct mbuf {
 #define m_data m_hdr.mh_data
 #define m_type m_hdr.mh_type
 #define m_flags m_hdr.mh_flags
+#define m_nextflag m_hdr.mh_nextflag
 #define m_nextpkt m_hdr.mh_nextpkt
 #define m_act m_nextpkt
 #define m_pkthdr M_dat.MH.MH_pkthdr
@@ -75,9 +81,27 @@ typedef struct mbuf {
 #define m_pktdat M_dat.MH.MH_dat.MH_databuf
 #define m_dat M_dat.M_databuf
 
-typedef struct mbuf2{
-    struct mbuf2 *m2_next;
-    void *data;
-} MBUF2;
+typedef struct mbufex {
+    void *mex_next;
+    uint8_t mex_nextflag;
+    void *mex_data;
+} MBUFEX;
 
+typedef struct queues {
+    union {
+        MBUF *head;
+        MBUFEX *headex;
+    };
+    union {
+        MBUF *tail;
+        MBUFEX *tailex;
+    };
+    uint32_t num;
+    uint8_t headflag;
+    uint8_t tailflag;
+} QUEUES;
+
+extern int QueueInit(QUEUES *queues);
 extern int QueueInitTest(QUEUES *queues);
+extern void *QueueEnqueue(QUEUES *queues, void *data, uint8_t mbuftype);
+extern void *QueueDequeue(QUEUES *queues);

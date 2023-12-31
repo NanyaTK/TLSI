@@ -5,7 +5,7 @@
 int main(void) {
     OSInit();
     QUEUES *queues;
-    queues = OSMemoryAlloc(sizeof(queues));
+    queues = OSMemoryAlloc(sizeof(*queues));
     if (QueueInitTest(queues) == -1) {
         errorf("QueueInitTest() failure");
     } else {
