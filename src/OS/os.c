@@ -19,10 +19,7 @@
 
 #include <stdio.h>
 
-#include "linux.h"
 #include "src/type.h"
-#include "unix.h"
-#include "windows.h"
 
 static OSFunctionTable *os = NULL;
 
