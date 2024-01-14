@@ -56,7 +56,6 @@ add_executable(0101_util_log_test.exe ./test/0101_util_log_test.c)
 add_executable(0100_util_getlocaltime_test.exe ./test/0100_util_getlocaltime_test.c)
 add_executable(0201_os_flockfile_test.exe ./test/0201_os_flockfile_test.c)
 add_executable(0500_network_ifnetalloc_test.exe ./test/0500_network_ifnetalloc_test.c)
-
 add_executable(0300_dummy_dummyinit_test.exe ./test/0300_dummy_dummyinit_test.c)
 add_executable(0400_loopback_loopbackinit_test.exe ./test/0400_loopback_loopbackinit_test.c)
 add_executable(0402_loopback_loopbackoutput_test.exe ./test/0402_loopback_loopbackoutput_test.c)
@@ -65,6 +64,11 @@ add_executable(0601_memory_QueueEnqueue_test.exe ./test/0601_memory_QueueEnqueue
 add_executable(0602_memory_QueueDequeue_test.exe ./test/0602_memory_QueueDequeue_test.c)
 
 add_executable(9900_union.exe ./test/9900_union.c)
+
+if(UNIX)
+else()
+add_executable(9901_winmutex.exe ./test/9901_winmutex.cpp)
+endif()
 
 target_link_libraries(dummy util)
 target_link_libraries(loopback util)
