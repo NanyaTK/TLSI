@@ -19,6 +19,8 @@
  * memory.h
  * Header of memory.c
  */
+#ifndef MEMORY_H
+#define MEMORY_H
 
 #include <stdint.h>
 
@@ -105,3 +107,5 @@ extern int QueueInit(QUEUES *queues);
 extern int QueueInitTest(QUEUES *queues);
 extern void *QueueEnqueue(QUEUES *queues, void *data, uint8_t mbuftype);
 extern void *QueueDequeue(QUEUES *queues);
+
+#endif
