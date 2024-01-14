@@ -64,7 +64,11 @@ add_executable(0601_memory_QueueEnqueue_test.exe ./test/0601_memory_QueueEnqueue
 add_executable(0602_memory_QueueDequeue_test.exe ./test/0602_memory_QueueDequeue_test.c)
 
 add_executable(9900_union.exe ./test/9900_union.c)
+
+if(UNIX)
+else()
 add_executable(9901_winmutex.exe ./test/9901_winmutex.cpp)
+endif()
 
 target_link_libraries(dummy util)
 target_link_libraries(loopback util)
