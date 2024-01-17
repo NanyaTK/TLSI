@@ -24,7 +24,9 @@
 
 #include <stdio.h>
 
-typedef struct TIME {
+#include "src/type.h"
+
+struct TIME {
     short year;
     short month;
     short day;
@@ -32,26 +34,32 @@ typedef struct TIME {
     short minute;
     short second;
     short milliseconds;
-} TIME;
+};
 
-typedef struct OSFunctionTable {
+struct OSFunctionTable {
     void (*Init)(void);
     void *(*MemoryAlloc)(size_t size);
     void (*MemoryFree)(void *ptr);
     TIME (*GetLocalTime)(void);
     void (*FLockFile)(FILE *file);
     void (*FunLockFile)(FILE *file);
-} OSFunctionTable;
+    void *(*LockInit)(void *lock);
+    void (*Lock)(void *lock);
+    void (*Unlock)(void *lock);
+};
 
 extern void OSInit(void);
 extern void *OSMemoryAlloc(size_t size);
 extern void OSMemoryFree(void *ptr);
-TIME OSGetLocalTime(void);
-void OSFLockFile(FILE *file);
-void OSFunLockFile(FILE *file);
+extern TIME OSGetLocalTime(void);
+extern void OSFLockFile(FILE *file);
+extern void OSFunLockFile(FILE *file);
+extern void *OSLockInit(void *lock);
+extern void OSLock(void *lock);
+extern void OSUnlock(void *lock);
 
 // include the OS-specific header
-#ifdef WIN32
+#ifdef _WIN32
 #include "windows.h"
 #elif __linux__  // linux
 #include "linux.h"

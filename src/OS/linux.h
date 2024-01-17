@@ -26,10 +26,12 @@
 #include <stddef.h>
 #include <stdlib.h>
 #ifdef __linux__
+#include <pthread.h>
 #include <sys/time.h>
 #endif
 
-#include "os.h"
+#include "src/OS/os.h"
+#include "src/type.h"
 
 //
 extern OSFunctionTable *LinuxGetFunctionTable();
@@ -52,4 +54,12 @@ extern TIME LinuxGetLocalTime();
 
 extern void LinuxFLockFile(FILE *file);
 extern void LinuxFunLockFile(FILE *file);
+
+/*
+ * mutex
+ */
+extern void *LinuxMutexInit(void *lock);
+extern void LinuxMutexLock(void *lock);
+extern void LinuxMutexUnlock(void *lock);
+
 #endif

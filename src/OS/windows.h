@@ -49,7 +49,17 @@ extern void WIN32MemoryFree(void *ptr);
  */
 extern TIME WIN32GetLocalTime(void);
 
+/*
+ * File
+ */
 extern void WIN32FLockFile(FILE *file);
 extern void WIN32FunLockFile(FILE *file);
+
+/*
+ * Mutex
+ */
+extern void *WIN32Init(void *lock);
+extern void WIN32Lock(void *lock);
+extern void WIN32Unlock(void *lock);
 
 #endif  // WINDOWS_H

@@ -22,27 +22,29 @@
 #include <sys/time.h>
 #include <time.h>
 
-#include "os.h"
+#include "src/OS/os.h"
+#include "src/type.h"
 
 OSFunctionTable *LinuxGetFunctionTable() {
     static OSFunctionTable t = {
         LinuxInit,         LinuxMemoryAlloc, LinuxMemoryFree,
         LinuxGetLocalTime, LinuxFLockFile,   LinuxFunLockFile,
+        LinuxMutexInit,    LinuxMutexLock,   LinuxMutexUnlock,
     };
     return &t;
 }
 
-void LinuxInit() {
+extern void LinuxInit() {
     fprintf(stderr, "  =====================================\n");
     fprintf(stderr, "  |  OSInit -> LinuxInit was called   |\n");
     fprintf(stderr, "  |  OS type was registered as Linux  |\n");
     fprintf(stderr, "  =====================================\n");
 }
 
-void *LinuxMemoryAlloc(size_t size) { return calloc(1, size); }
-void LinuxMemoryFree(void *ptr) { free(ptr); }
+extern void *LinuxMemoryAlloc(size_t size) { return calloc(1, size); }
+extern void LinuxMemoryFree(void *ptr) { free(ptr); }
 
-TIME LinuxGetLocalTime() {
+extern TIME LinuxGetLocalTime() {
     TIME time;
     struct timeval tv;
     struct tm *tm;
@@ -59,5 +61,28 @@ TIME LinuxGetLocalTime() {
     return time;
 }
 
-void LinuxFLockFile(FILE *file) { flockfile(file); }
-void LinuxFunLockFile(FILE *file) { funlockfile(file); }
+extern void LinuxFLockFile(FILE *file) { flockfile(file); }
+extern void LinuxFunLockFile(FILE *file) { funlockfile(file); }
+
+/*
+ * mutex
+ */
+extern void *LinuxMutexInit(void *lock) {
+    pthread_mutex_t *mutex;
+    mutex = LinuxMemoryAlloc(sizeof(pthread_mutex_t));
+    pthread_mutex_init(mutex, NULL);
+    lock = (void *)mutex;
+    return lock;
+}
+
+extern void LinuxMutexLock(void *lock) {
+    pthread_mutex_t *mutex;
+    mutex = (pthread_mutex_t *)lock;
+    pthread_mutex_lock(mutex);
+    return;
+}
+extern void LinuxMutexUnlock(void *lock) {
+    pthread_mutex_t *mutex;
+    mutex = (pthread_mutex_t *)lock;
+    return;
+}
