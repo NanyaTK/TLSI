@@ -55,4 +55,41 @@
 #define QUEUES_TAILFLAG_MBUF 1
 #define QUEUES_TAILFLAG_MBUFEX 2
 
+/*
+ * Linux
+ */
+#ifdef __linux__
+#elif _WIN32
+#define THREADCOUNT 2
+#endif
+
+typedef struct TIME TIME;
+typedef struct OSFunctionTable OSFunctionTable;
+typedef struct m_hdr M_HDR;
+typedef struct pkthdr PKTHDR;
+typedef struct m_ext M_EXT;
+typedef struct mbuf MBUF;
+typedef struct mbufex MBUFEX;
+typedef struct queues QUEUES;
+
+typedef struct if_data IF_DATA;
+typedef struct sockaddr SOCKADDR;
+typedef struct ifaddr IFADDR;
+typedef struct ifnet IFNET;
+typedef struct iffunc IFFUNC;
+#define if_type if_data.ifi_type
+#define if_addrlen if_data.ifi_addrlen
+#define if_hdrlen if_data.ifi_hdrlen
+#define if_mtu if_data.ifi_mtu
+#define if_metric if_data.ifi_metric
+#define if_baudrate if_data.ifi_baudrate
+#define if_ipackets if_data.ifi_ipackets
+#define if_ierrors if_data.ifi_ierrors
+#define if_opackets if_data.ifi_opackets
+#define if_ibytes if_data.ifi_ibytes
+#define if_obytes if_data.ifi_obytes
+#define if_imcasts if_data.ifi_imcasts
+#define if_omcasts if_data.ifi_omcasts
+#define if_lastchange if_data.ifi_lastchange
+
 #endif

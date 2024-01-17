@@ -16,50 +16,10 @@
  */
 
 /*
- * linux.h
- * header of linux.c
+ * object.h
+ * 
  */
-
-#ifndef LINUX_H
-#define LINUX_H
-
-#include <stddef.h>
-#include <stdlib.h>
-#ifdef __linux__
-#include <pthread.h>
-#include <sys/time.h>
-#endif
-
-#include "src/OS/os.h"
-#include "src/type.h"
-
-//
-extern OSFunctionTable *LinuxGetFunctionTable();
-
-/*
- * Initialize
- */
-extern void LinuxInit();
-
-/*
- * Memory
- */
-extern void *LinuxMemoryAlloc(size_t size);
-extern void LinuxMemoryFree(void *ptr);
-
-/*
- * Time
- */
-extern TIME LinuxGetLocalTime();
-
-extern void LinuxFLockFile(FILE *file);
-extern void LinuxFunLockFile(FILE *file);
-
-/*
- * mutex
- */
-extern void *LinuxMutexInit(void *lock);
-extern void LinuxMutexLock(void *lock);
-extern void LinuxMutexUnlock(void *lock);
+#ifndef OBJECT_H
+#define OBJECT_H
 
 #endif

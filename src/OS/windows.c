@@ -26,6 +26,8 @@ OSFunctionTable *WIN32GetFunctionTable() {
     static OSFunctionTable t = {
         WIN32Init,         WIN32MemoryAlloc, WIN32MemoryFree,
         WIN32GetLocalTime, WIN32FLockFile,   WIN32FunLockFile,
+        WIN32LockInit,    WIN32Lock,   WIN32Unlock,
+
     };
     return &t;
 }
@@ -62,3 +64,24 @@ TIME WIN32GetLocalTime(void) {
  */
 void WIN32FLockFile(FILE *file) { _lock_file(file); }
 void WIN32FunLockFile(FILE *file) { _unlock_file(file); }
+
+extern void *WIN32LockInit(void *lock) {
+    CRITICAL_SECTION *crit_section = WIN32MemoryAlloc(sizeof(CRITICAL_SECTION));
+    InitializeCriticalSection(crit_section);
+    lock = (void *)crit_section;
+    return lock;
+}
+
+extern void WIN32Lock(void *lock) {
+    CRITICAL_SECTION *crit_section = WIN32MemoryAlloc(sizeof(CRITICAL_SECTION));
+    crit_section = (CRITICAL_SECTION *)lock;
+    EnterCriticalSection(crit_section);
+    return;
+}
+
+extern void WIN32Unlock(void *lock) {
+    CRITICAL_SECTION *crit_section = WIN32MemoryAlloc(sizeof(CRITICAL_SECTION));
+    crit_section = (CRITICAL_SECTION *)lock;
+    LeaveCriticalSection(crit_section);
+    return;
+}
