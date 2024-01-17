@@ -84,5 +84,6 @@ extern void LinuxMutexLock(void *lock) {
 extern void LinuxMutexUnlock(void *lock) {
     pthread_mutex_t *mutex;
     mutex = (pthread_mutex_t *)lock;
+    pthread_mutex_unlock(mutex);
     return;
 }
