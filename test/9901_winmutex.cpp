@@ -77,7 +77,7 @@ DWORD WINAPI WriteToDatabase(LPVOID lpParam) {
                 __finally {
                     // Release ownership of the mutex object
                     if (!ReleaseMutex(ghMutex)) {
-                        // Handle error.
+                        fprintf(stderr, "WIN32MutexUnlock failure:%d\n", GetLastError());
                     }
                 }
                 break;
