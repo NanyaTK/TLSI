@@ -58,7 +58,7 @@ extern void WIN32FunLockFile(FILE *file);
 /*
  * Mutex
  */
-extern void *WIN32Init(void *lock);
+extern void *WIN32LockInit(void *lock);
 extern void WIN32Lock(void *lock);
 extern void WIN32Unlock(void *lock);
 
