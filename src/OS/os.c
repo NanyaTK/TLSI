@@ -19,10 +19,7 @@
 
 #include <stdio.h>
 
-#include "linux.h"
 #include "src/type.h"
-#include "unix.h"
-#include "windows.h"
 
 static OSFunctionTable *os = NULL;
 
@@ -35,7 +32,7 @@ static OSFunctionTable *os = NULL;
  *     OSGetLocalTime() and so on.
  * ===================================
  */
-void OSInit(void) {
+extern void OSInit(void) {
 #ifdef _WIN32
     os = WIN32GetFunctionTable();
 #elif __linux__
@@ -68,7 +65,7 @@ int GetOsType(int ostype) {
  *  SIZE bytes each, all initialized to 0.
  * ===================================
  */
-void *OSMemoryAlloc(size_t size) { return os->MemoryAlloc(size); }
+extern void *OSMemoryAlloc(size_t size) { return os->MemoryAlloc(size); }
 
 /*
  * ===================================
@@ -78,7 +75,10 @@ void *OSMemoryAlloc(size_t size) { return os->MemoryAlloc(size); }
  *  OSMemoryAlloc.
  * ===================================
  */
-void OSMemoryFree(void *ptr) { os->MemoryFree(ptr); }
-TIME OSGetLocalTime(void) { return os->GetLocalTime(); }
-void OSFLockFile(FILE *file) { os->FLockFile(file); }
-void OSFunLockFile(FILE *file) { os->FunLockFile(file); }
+extern void OSMemoryFree(void *ptr) { os->MemoryFree(ptr); }
+extern TIME OSGetLocalTime(void) { return os->GetLocalTime(); }
+extern void OSFLockFile(FILE *file) { os->FLockFile(file); }
+extern void OSFunLockFile(FILE *file) { os->FunLockFile(file); }
+extern void *OSLockInit(void *lock) { os->LockInit(lock); }
+extern void OSLock(void *lock) { os->Lock(lock); }
+extern void OSUnlock(void *lock) { os->Unlock(lock); }

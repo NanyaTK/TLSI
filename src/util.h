@@ -25,7 +25,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#include "OS/os.h"
+#include "src/OS/os.h"
+#include "src/type.h"
 
 /*
  * Log

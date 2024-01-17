@@ -4,8 +4,9 @@
 #include "src/OS/os.h"
 #include "src/util.h"
 
+#ifndef MLEN
 #define MLEN 1500
-
+#endif
 typedef struct m_hdr {
     struct mbuf *mh_next;
     struct mbuf *mh_nextpkt;
