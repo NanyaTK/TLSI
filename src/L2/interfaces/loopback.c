@@ -17,12 +17,21 @@
 
 #include "loopback.h"
 
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "src/L2/network.h"
+#include "src/memory.h"
 #include "src/type.h"
 #include "src/util.h"
+
+typedef struct lo {
+    int irq;
+    
+    QUEUES queue;
+} LO;
 
 static int LoopbackOutput(IFNET *interface, const uint8_t *data,
                           const void *dst) {
